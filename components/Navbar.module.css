@@ -2,17 +2,6 @@
    SIDEBAR + MOBILE NAV
 ═══════════════════════════════════════ */
 
-:root {
-  --sidebar-w: 230px;
-  --mobile-bar-h: 56px;
-  --sidebar-bg: #0d0d12;
-  --sidebar-border: rgba(255,255,255,0.07);
-  --accent: #6c47ff;
-  --accent2: #a78bfa;
-  --text: #e2e2e2;
-  --text-muted: #6b6b7b;
-}
-
 /* ── Sidebar (desktop: always visible) ── */
 .sidebar {
   position: fixed;
