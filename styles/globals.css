@@ -1,23 +1,24 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 :root {
-  --sidebar-w: 230px;
-  --mobile-bar-h: 56px;
-  --bg: #080810;
-  --bg2: #0f0f18;
-  --accent: #6c47ff;
-  --accent2: #a78bfa;
-  --red: #e50914;
-  --text: #e2e2e2;
-  --text-muted: #6b6b7b;
-  --radius: 10px;
+  --sidebar-w: 220px;
+  --topbar-h: 64px;
+  --bg: #0a0a0f;
+  --bg-card: #111118;
+  --bg-input: #16161f;
+  --border: rgba(255,255,255,0.07);
+  --purple: #7c3aed;
+  --purple-light: #a78bfa;
+  --text: #e5e5e5;
+  --text-muted: #6b7280;
+  --text-dim: #9ca3af;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Inter', 'Poppins', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   background: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
@@ -25,10 +26,7 @@ body {
 }
 
 /* ── Site Layout ── */
-.siteWrapper {
-  display: flex;
-  min-height: 100vh;
-}
+.siteWrapper { display: flex; min-height: 100vh; }
 
 .siteMain {
   flex: 1;
@@ -38,54 +36,39 @@ body {
   flex-direction: column;
 }
 
-@media (max-width: 968px) {
+@media (max-width: 900px) {
   .siteMain {
     margin-left: 0;
-    padding-top: var(--mobile-bar-h);
   }
 }
 
 /* ── Scrollbar ── */
-::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: #2a2a3a; border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: #3a3a50; }
 * { scrollbar-width: thin; scrollbar-color: #2a2a3a transparent; }
 
 /* ── Selection ── */
-::selection { background: var(--accent); color: white; }
+::selection { background: var(--purple); color: white; }
 
 /* ── Typography ── */
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'Poppins', sans-serif;
-  font-weight: 700;
-  line-height: 1.25;
-  color: white;
-}
-
-p { color: var(--text); line-height: 1.6; }
+h1,h2,h3,h4,h5,h6 { font-weight: 700; line-height: 1.25; color: white; }
+p { color: var(--text-dim); line-height: 1.6; }
 a { text-decoration: none; color: inherit; }
 button { font-family: inherit; cursor: pointer; border: none; outline: none; }
+img { display: block; }
 
 /* ── Container ── */
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-@media (max-width: 768px) { .container { padding: 0 14px; } }
-@media (max-width: 480px) { .container { padding: 0 10px; } }
+.container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+@media (max-width: 768px) { .container { padding: 0 16px; } }
 
 /* ── Animations ── */
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes slideUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
 
 /* ── Reduced Motion ── */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
 }

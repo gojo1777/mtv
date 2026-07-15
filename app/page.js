@@ -15,36 +15,25 @@ async function getMovies() {
   }
 }
 
-function SectionRow({ title, movies, href }) {
-  if (!movies || movies.length === 0) return null;
+function Row({ title, movies, href }) {
+  if (!movies?.length) return null;
   return (
     <section className={styles.section}>
-      <div className={styles.sectionHead}>
-        <h2 className={styles.sectionTitle}>{title}</h2>
-        {href && <Link href={href} className={styles.viewAll}>සියල්ල ➔</Link>}
+      <div className={styles.rowHead}>
+        <h2 className={styles.rowTitle}>{title}</h2>
+        {href && <Link href={href} className={styles.viewAll}>View all</Link>}
       </div>
       <div className={styles.row}>
-        {movies.map(movie =>
-          movie && movie._id ? <MovieCard key={movie._id} movie={movie} /> : null
-        )}
+        {movies.map(m => m?._id ? <MovieCard key={m._id} movie={m} /> : null)}
       </div>
     </section>
   );
 }
 
 export default async function Home() {
-  const movies = await getMovies();
+  const all = await getMovies();
 
-  const featured   = movies.find(m => m.featured && m.imageUrl) || movies[0];
-  const latest     = movies.slice(0, 18);
-  const cartoons   = movies.filter(m => m.category === 'Cartoon').slice(0, 12);
-  const anime      = movies.filter(m => m.category === 'Anime').slice(0, 12);
-  const series     = movies.filter(m => m.category === 'Series').slice(0, 12);
-  const dubbed     = movies.filter(m => m.language === 'Sinhala Dub' || m.language === 'Both').slice(0, 12);
-  const subMovies  = movies.filter(m => m.language === 'Sinhala Sub').slice(0, 12);
-  const adult      = movies.filter(m => m.ageRating === '18+').slice(0, 12);
-
-  if (!movies || movies.length === 0) {
+  if (!all.length) {
     return (
       <div className={styles.empty}>
         <div className={styles.emptyIcon}>🎬</div>
@@ -55,55 +44,74 @@ export default async function Home() {
     );
   }
 
+  const featured  = all.find(m => m.featured && m.imageUrl) || all[0];
+  const latest    = all.slice(0, 20);
+  const cartoons  = all.filter(m => m.category === 'Cartoon').slice(0, 16);
+  const anime     = all.filter(m => m.category === 'Anime').slice(0, 16);
+  const series    = all.filter(m => m.category === 'Series').slice(0, 16);
+  const dubbed    = all.filter(m => m.language === 'Sinhala Dub' || m.language === 'Both').slice(0, 16);
+  const sub       = all.filter(m => m.language === 'Sinhala Sub').slice(0, 16);
+  const adult     = all.filter(m => m.ageRating === '18+').slice(0, 16);
+
   return (
     <div className={styles.page}>
 
-      {/* ── Hero Banner ── */}
+      {/* ── Hero ── */}
       {featured && (
-        <section
-          className={styles.hero}
-          style={{ backgroundImage: `url(${featured.imageUrl})` }}
-        >
+        <section className={styles.hero} style={{ backgroundImage: `url(${featured.imageUrl})` }}>
           <div className={styles.heroGrad} />
-          <div className={styles.heroContent}>
-            <div className={styles.heroBadges}>
-              <span className={styles.badgeTrending}>🔥 Trending</span>
-              {featured.year && <span className={styles.badgeYear}>{featured.year}</span>}
-              {featured.ageRating && featured.ageRating !== 'All' && (
-                <span className={styles.badgeAge}>{featured.ageRating}</span>
+
+          <div className={styles.heroBody}>
+            <h1 className={styles.heroTitle}>{featured.sinhalaTitle || featured.title}</h1>
+
+            <div className={styles.heroMeta}>
+              {featured.rating > 0 && (
+                <div className={styles.ratingCircle}>
+                  <span>{Number(featured.rating).toFixed(1)}</span>
+                </div>
               )}
               {featured.language && (
-                <span className={styles.badgeLang}>{featured.language}</span>
+                <span className={styles.metaTag}>{featured.language}</span>
+              )}
+              {featured.year && (
+                <span className={styles.metaTag}>{featured.year}</span>
+              )}
+              {featured.ageRating && featured.ageRating !== 'All' && (
+                <span className={`${styles.metaTag} ${styles.ageTag}`}>{featured.ageRating}</span>
               )}
             </div>
-            <h1 className={styles.heroTitle}>{featured.sinhalaTitle || featured.title}</h1>
+
             {featured.description && (
               <p className={styles.heroDesc}>
-                {featured.description.slice(0, 180)}{featured.description.length > 180 ? '…' : ''}
+                {featured.description.slice(0, 200)}{featured.description.length > 200 ? '…' : ''}
               </p>
             )}
-            <div className={styles.heroActions}>
-              <Link href={`/movie/${featured._id}`} className={styles.btnWatch}>
-                ▶ දැන් නරඹන්න
-              </Link>
-              {featured.rating > 0 && (
-                <span className={styles.heroRating}>⭐ {Number(featured.rating).toFixed(1)}</span>
-              )}
-            </div>
+
+            <Link href={`/movie/${featured._id}`} className={styles.watchBtn}>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+              Watch now
+            </Link>
+          </div>
+
+          {/* Pagination dots */}
+          <div className={styles.heroDots}>
+            <span className={styles.dotActive} />
+            <span className={styles.dot} />
+            <span className={styles.dot} />
           </div>
         </section>
       )}
 
-      {/* ── Content Rows ── */}
+      {/* ── Rows ── */}
       <div className={styles.content}>
-        <SectionRow title="🎬 නවතම එක්කිරීම්"     movies={latest}    href="/movies" />
-        <SectionRow title="🎨 Sinhala Cartoons"     movies={cartoons}  href="/movies?category=Cartoon" />
-        <SectionRow title="⚡ Sinhala Sub Anime"    movies={anime}     href="/movies?category=Anime" />
-        <SectionRow title="📺 Series"               movies={series}    href="/movies?category=Series" />
-        <SectionRow title="🎙️ සිංහල Dub Movies"    movies={dubbed}    href="/movies?lang=dubbed" />
-        <SectionRow title="📝 සිංහල Sub Movies"     movies={subMovies} href="/movies?lang=sub" />
+        <Row title="Latest Movies"       movies={latest}   href="/movies" />
+        <Row title="Sinhala Cartoons"    movies={cartoons} href="/movies?category=Cartoon" />
+        <Row title="Anime"               movies={anime}    href="/movies?category=Anime" />
+        <Row title="TV Series"           movies={series}   href="/movies?category=Series" />
+        <Row title="Sinhala Dub Movies"  movies={dubbed}   href="/movies?lang=dubbed" />
+        <Row title="Sinhala Sub Movies"  movies={sub}      href="/movies?lang=sub" />
         {adult.length > 0 && (
-          <SectionRow title="🔞 18+ Movies"         movies={adult}     href="/movies?rating=18+" />
+          <Row title="18+ Movies"        movies={adult}    href="/movies?rating=18+" />
         )}
       </div>
     </div>

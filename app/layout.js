@@ -1,6 +1,7 @@
 import Script from 'next/script';
 import '../styles/globals.css';
 import Navbar from '../components/Navbar';
+import SearchHeader from '../components/SearchHeader';
 import Analytics from '../components/Analytics';
 import LiveChat from '../components/LiveChat';
 
@@ -40,35 +41,26 @@ export default function RootLayout({ children }) {
   return (
     <html lang="si">
       <head>
-        <Script
-          src="https://pl28670651.effectivegatecpm.com/a3/05/26/a305266c24399ceec90c418c2dd5660a.js"
-          strategy="afterInteractive"
-        />
-        <Script
-          id="popads-script"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `(function(){var o=window,r="e12d6ed76eb09e83888d65090dc84778",s=[["siteId",5276277],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],p=["d3d3LmNkbjRhZHMuY29tL212YWxpZGF0b3IubWluLmNzcw==","ZDNnNW92Zm5nanc5YncuY2xvdWRmcm9udC5uZXQvaEpTUS9yY3VycmVuY3lGb3JtYXR0ZXIubWluLmpz"],c=-1,u,n,l=function(){clearTimeout(n);c++;if(p[c]&&!(1796745770000<(new Date).getTime()&&1<c)){u=o.document.createElement("script");u.type="text/javascript";u.async=!0;var i=o.document.getElementsByTagName("script")[0];u.src="https://"+atob(p[c]);u.crossOrigin="anonymous";u.onerror=l;u.onload=function(){clearTimeout(n);o[r.slice(0,16)+r.slice(0,16)]||l()};n=setTimeout(l,5E3);i.parentNode.insertBefore(u,i)}};if(!o[r]){try{Object.freeze(o[r]=s)}catch(e){}l()}})();`,
-          }}
-        />
+        <Script src="https://pl28670651.effectivegatecpm.com/a3/05/26/a305266c24399ceec90c418c2dd5660a.js" strategy="afterInteractive" />
+        <Script id="popads-script" strategy="afterInteractive" dangerouslySetInnerHTML={{
+          __html: `(function(){var o=window,r="e12d6ed76eb09e83888d65090dc84778",s=[["siteId",5276277],["minBid",0],["popundersPerIP","0"],["delayBetween",0],["default",false],["defaultPerDay",0],["topmostLayer","auto"]],p=["d3d3LmNkbjRhZHMuY29tL212YWxpZGF0b3IubWluLmNzcw==","ZDNnNW92Zm5nanc5YncuY2xvdWRmcm9udC5uZXQvaEpTUS9yY3VycmVuY3lGb3JtYXR0ZXIubWluLmpz"],c=-1,u,n,l=function(){clearTimeout(n);c++;if(p[c]&&!(1796745770000<(new Date).getTime()&&1<c)){u=o.document.createElement("script");u.type="text/javascript";u.async=!0;var i=o.document.getElementsByTagName("script")[0];u.src="https://"+atob(p[c]);u.crossOrigin="anonymous";u.onerror=l;u.onload=function(){clearTimeout(n);o[r.slice(0,16)+r.slice(0,16)]||l()};n=setTimeout(l,5E3);i.parentNode.insertBefore(u,i)}};if(!o[r]){try{Object.freeze(o[r]=s)}catch(e){}l()}})();`
+        }} />
       </head>
       <body>
         <Analytics />
         <div className="siteWrapper">
           <Navbar />
           <div className="siteMain">
+            <SearchHeader />
             <main style={{ flex: 1 }}>{children}</main>
             <footer style={{
+              padding: '28px 24px',
+              borderTop: '1px solid rgba(255,255,255,0.06)',
+              background: '#0a0a0f',
               textAlign: 'center',
-              padding: '32px 20px',
-              borderTop: '1px solid rgba(255,255,255,0.07)',
-              background: '#0d0d12',
-              color: '#4a4a5a',
-              fontSize: '0.82rem'
             }}>
-              <p style={{ color: '#6c47ff', fontWeight: 700, fontSize: '1rem', marginBottom: '6px' }}>SIRIES HUB LK</p>
-              <p style={{ marginBottom: '4px' }}>ඔබට අවශ්‍ය සියලුම සිංහල උපසිරැසි සහ හඬකැවූ චිත්‍රපට එකම තැනකින්.</p>
-              <p>© 2026 SIRIES HUB LK. All rights reserved.</p>
+              <p style={{ color: '#7c3aed', fontWeight: 800, fontSize: '0.95rem', marginBottom: '6px', letterSpacing: '0.5px' }}>SIRIES HUB LK</p>
+              <p style={{ color: '#374151', fontSize: '0.8rem' }}>© 2026 SIRIES HUB LK. All rights reserved.</p>
             </footer>
           </div>
         </div>
