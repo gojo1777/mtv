@@ -22,7 +22,7 @@ const nextConfig = {
 
   // Environment variables
   env: {
-    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || 'https://movie-web-rust-eight.vercel.app',
+    NEXT_PUBLIC_SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || '',
   },
 
   // Build optimization (swcMinify removed - default in Next.js 15)

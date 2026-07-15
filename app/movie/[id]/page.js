@@ -5,7 +5,8 @@ import Comments from '../../../components/Comments';
 // --- 🔍 1. Metadata ---
 export async function generateMetadata({ params }) {
   const { id } = await params;
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://movie-web-rust-eight.vercel.app';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ||
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
   
   try {
     const res = await fetch(`${baseUrl}/api/movies/${id}`);
@@ -37,7 +38,8 @@ export async function generateMetadata({ params }) {
 // --- 🎬 2. Data Fetching ---
 async function getMovie(id) {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://movie-web-rust-eight.vercel.app';
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ||
+      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
     const res = await fetch(`${baseUrl}/api/movies/${id}`, { cache: 'no-store' });
     if (!res.ok) return null;
     return res.json();

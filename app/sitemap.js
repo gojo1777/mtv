@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export default async function sitemap() {
-  const baseUrl = 'https://movie-web-rust-eight.vercel.app';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sirieshublk.vercel.app';
   
   let movies = [];
   try {

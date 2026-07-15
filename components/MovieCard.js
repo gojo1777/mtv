@@ -1,101 +1,57 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import styles from './MovieCard.module.css';
 
 export default function MovieCard({ movie }) {
   if (!movie) return null;
 
-  const getBadgeColor = (rating) => {
-    if (rating === '18+') return styles.badge18;
-    if (rating === '16+') return styles.badge16;
-    if (rating === '13+') return styles.badge13;
-    return styles.badgeAll;
+  const getLangLabel = (lang) => {
+    if (lang === 'Sinhala Dub' || lang === 'Both') return 'DUB';
+    if (lang === 'Sinhala Sub') return 'SUB';
+    if (lang === 'Sinhala Sub Anime') return 'ANIME';
+    return lang?.slice(0, 4) || '';
   };
 
-  const getLanguageBadge = (lang) => {
-    if (lang === 'Sinhala Dub' || lang === 'Both') return '🎙️ සිංහල';
-    if (lang === 'Sinhala Sub') return '📝 උපසිරැසි';
-    if (lang === 'Sinhala Sub Anime') return '⚡ Anime';
-    return lang;
-  };
-
-  const getCategoryIcon = (category) => {
-    if (category === 'Cartoon') return '🎨';
-    if (category === 'Anime') return '⚡';
-    if (category === 'Series') return '📺';
-    return '🎬';
+  const getLangClass = (lang) => {
+    if (lang === 'Sinhala Dub' || lang === 'Both') return styles.langDub;
+    if (lang?.includes('Sub')) return styles.langSub;
+    return styles.langOther;
   };
 
   return (
     <Link href={`/movie/${movie._id}`} className={styles.card}>
-      <div className={styles.imageWrapper}>
-        <Image
+      <div className={styles.poster}>
+        <img
           src={movie.imageUrl || '/placeholder.jpg'}
           alt={movie.sinhalaTitle || movie.title}
-          fill
-          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-          className={styles.image}
-          priority={false}
+          className={styles.img}
+          loading="lazy"
         />
-        
-        {/* Overlay with info */}
-        <div className={styles.overlay}>
-          <div className={styles.overlayContent}>
-            <h3 className={styles.overlayTitle}>
-              {movie.sinhalaTitle || movie.title}
-            </h3>
-            {movie.rating > 0 && (
-              <div className={styles.rating}>
-                <span className={styles.star}>⭐</span>
-                <span>{movie.rating.toFixed(1)}</span>
-              </div>
-            )}
-            <div className={styles.quickInfo}>
-              {movie.year && <span>{movie.year}</span>}
-              {movie.genre && movie.genre.length > 0 && (
-                <span>{movie.genre[0]}</span>
-              )}
-            </div>
-          </div>
-          <div className={styles.playButton}>
-            <span>▶</span>
-          </div>
-        </div>
-
-        {/* Top badges */}
-        <div className={styles.badgesTop}>
-          {movie.ageRating && movie.ageRating !== 'All' && (
-            <span className={`${styles.badge} ${getBadgeColor(movie.ageRating)}`}>
-              {movie.ageRating}
-            </span>
-          )}
-          {movie.category && (
-            <span className={`${styles.badge} ${styles.badgeCategory}`}>
-              {getCategoryIcon(movie.category)}
-            </span>
-          )}
-        </div>
-
-        {/* Language badge */}
-        {movie.language && (
-          <div className={styles.badgeBottom}>
-            <span className={styles.langBadge}>
-              {getLanguageBadge(movie.language)}
-            </span>
-          </div>
+        {/* Age badge */}
+        {movie.ageRating && movie.ageRating !== 'All' && (
+          <span className={`${styles.ageBadge} ${movie.ageRating === '18+' ? styles.age18 : ''}`}>
+            {movie.ageRating}
+          </span>
         )}
+        {/* Lang badge */}
+        {movie.language && (
+          <span className={`${styles.langBadge} ${getLangClass(movie.language)}`}>
+            {getLangLabel(movie.language)}
+          </span>
+        )}
+        {/* Hover overlay */}
+        <div className={styles.hoverOverlay}>
+          <div className={styles.playBtn}>▶</div>
+          {movie.rating > 0 && (
+            <div className={styles.ratingBadge}>⭐ {Number(movie.rating).toFixed(1)}</div>
+          )}
+        </div>
       </div>
-
       <div className={styles.info}>
-        <h3 className={styles.title}>
-          {movie.sinhalaTitle || movie.title}
-        </h3>
+        <h3 className={styles.title}>{movie.sinhalaTitle || movie.title}</h3>
         <div className={styles.meta}>
           {movie.year && <span className={styles.year}>{movie.year}</span>}
-          {movie.views > 0 && (
-            <span className={styles.views}>
-              👁️ {movie.views.toLocaleString()}
-            </span>
+          {movie.category && movie.category !== 'Movie' && (
+            <span className={styles.cat}>{movie.category}</span>
           )}
         </div>
       </div>

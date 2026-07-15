@@ -5,138 +5,107 @@ export const dynamic = 'force-dynamic';
 
 async function getMovies() {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://movie-web-rust-eight.vercel.app';
-    const res = await fetch(`${baseUrl}/api/movies`, { 
-      cache: 'no-store'
-    });
-    
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ||
+      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
+    const res = await fetch(`${baseUrl}/api/movies`, { cache: 'no-store' });
     if (!res.ok) return [];
     const data = await res.json();
     return Array.isArray(data) ? data : [];
-  } catch (error) { 
-    console.error("Fetch error:", error);
-    return []; 
+  } catch {
+    return [];
   }
+}
+
+function SectionRow({ title, movies, href }) {
+  if (!movies || movies.length === 0) return null;
+  return (
+    <section className={styles.section}>
+      <div className={styles.sectionHead}>
+        <h2 className={styles.sectionTitle}>{title}</h2>
+        {href && <Link href={href} className={styles.viewAll}>සියල්ල ➔</Link>}
+      </div>
+      <div className={styles.row}>
+        {movies.map(movie =>
+          movie && movie._id ? <MovieCard key={movie._id} movie={movie} /> : null
+        )}
+      </div>
+    </section>
+  );
 }
 
 export default async function Home() {
   const movies = await getMovies();
-  
+
+  const featured   = movies.find(m => m.featured && m.imageUrl) || movies[0];
+  const latest     = movies.slice(0, 18);
+  const cartoons   = movies.filter(m => m.category === 'Cartoon').slice(0, 12);
+  const anime      = movies.filter(m => m.category === 'Anime').slice(0, 12);
+  const series     = movies.filter(m => m.category === 'Series').slice(0, 12);
+  const dubbed     = movies.filter(m => m.language === 'Sinhala Dub' || m.language === 'Both').slice(0, 12);
+  const subMovies  = movies.filter(m => m.language === 'Sinhala Sub').slice(0, 12);
+  const adult      = movies.filter(m => m.ageRating === '18+').slice(0, 12);
+
   if (!movies || movies.length === 0) {
     return (
-      <div style={{ padding: '100px', textAlign: 'center' }}>
-        <h2>දැනට චිත්‍රපට කිසිවක් නොමැත.</h2>
-        <p>ඩේටාබේස් එකට ෆිල්ම් එකතු කරලාද බලන්න.</p>
+      <div className={styles.empty}>
+        <div className={styles.emptyIcon}>🎬</div>
+        <h2>දැනට Films කිසිවක් නොමැත</h2>
+        <p>Admin panel එකෙන් movies add කරන්න.</p>
+        <Link href="/admin" className={styles.adminLink}>Admin Panel →</Link>
       </div>
     );
   }
 
-  // Categories වලට වෙන් කරන්නේ මෙතනින්
-  const cartoons = movies.filter(m => m.category === 'Cartoon');
-  const anime = movies.filter(m => m.category === 'Anime');
-  const adultMovies = movies.filter(m => m.ageRating === '18+');
-  const sinhalaDubbed = movies.filter(m => m.language === 'Sinhala Dub' || m.language === 'Both');
-  const sinhalaSub = movies.filter(m => m.language === 'Sinhala Sub' || m.language === 'Sinhala Sub Anime');
-  
-  const featured = movies.find(m => m.featured && m.imageUrl) || movies[0];
-  const latest = movies.slice(0, 18);
-
   return (
-    <div className={styles.homeContainer}>
-      
-      {/* Hero Banner */}
+    <div className={styles.page}>
+
+      {/* ── Hero Banner ── */}
       {featured && (
-        <section 
-          className={styles.heroBanner} 
-          style={{ 
-            backgroundImage: `linear-gradient(to top, #0f0f0f 10%, rgba(15, 15, 15, 0.7) 50%, rgba(15, 15, 15, 0.4) 100%), url(${featured.imageUrl})` 
-          }}
+        <section
+          className={styles.hero}
+          style={{ backgroundImage: `url(${featured.imageUrl})` }}
         >
+          <div className={styles.heroGrad} />
           <div className={styles.heroContent}>
-            <div className={styles.badgeGroup}>
-              <span className={styles.trendingTag}>🔥 Trending</span>
-              <span className={styles.yearTag}>{featured.year}</span>
+            <div className={styles.heroBadges}>
+              <span className={styles.badgeTrending}>🔥 Trending</span>
+              {featured.year && <span className={styles.badgeYear}>{featured.year}</span>}
               {featured.ageRating && featured.ageRating !== 'All' && (
-                <span className={styles.ageTag}>{featured.ageRating}</span>
+                <span className={styles.badgeAge}>{featured.ageRating}</span>
+              )}
+              {featured.language && (
+                <span className={styles.badgeLang}>{featured.language}</span>
               )}
             </div>
             <h1 className={styles.heroTitle}>{featured.sinhalaTitle || featured.title}</h1>
-            <p className={styles.heroDesc}>
-              {featured.description ? featured.description.slice(0, 160) + "..." : "විස්තරයක් ඇතුළත් කර නොමැත."}
-            </p>
+            {featured.description && (
+              <p className={styles.heroDesc}>
+                {featured.description.slice(0, 180)}{featured.description.length > 180 ? '…' : ''}
+              </p>
+            )}
             <div className={styles.heroActions}>
-              <Link href={`/movie/${featured._id}`} className={styles.btnPrimary}>
-                <span>▶</span> දැන් නරඹන්න
+              <Link href={`/movie/${featured._id}`} className={styles.btnWatch}>
+                ▶ දැන් නරඹන්න
               </Link>
-              {featured.trailerUrl && (
-                <Link href={featured.trailerUrl} className={styles.btnSecondary} target="_blank">
-                  <span>🎬</span> Trailer
-                </Link>
+              {featured.rating > 0 && (
+                <span className={styles.heroRating}>⭐ {Number(featured.rating).toFixed(1)}</span>
               )}
             </div>
           </div>
         </section>
       )}
 
-      <div className="container">
-        
-        {/* නවතම එක්කිරීම් */}
-        <div className={styles.sectionHeader}>
-          <h2 className={styles.rowTitle}>🎬 නවතම එක්කිරීම්</h2>
-          <Link href="/movies" className={styles.viewAll}>සියල්ල බලන්න ➔</Link>
-        </div>
-
-        <div className={styles.movieGrid}>
-          {latest.map(movie => (
-            movie && movie._id ? <MovieCard key={movie._id} movie={movie} /> : null
-          ))}
-        </div>
-
-        {/* සින්හල හඬ කැවූ Cartoons */}
-        {sinhalaDubbed.length > 0 && (
-          <>
-            <div className={styles.sectionHeader}>
-              <h2 className={styles.rowTitle}>🎨 සින්හල හඬ කැවූ Cartoons</h2>
-              <Link href="/movies?category=Cartoon&lang=dubbed" className={styles.viewAll}>තව බලන්න ➔</Link>
-            </div>
-            <div className={styles.movieGrid}>
-              {sinhalaDubbed.filter(m => m.category === 'Cartoon').slice(0, 6).map(movie => (
-                <MovieCard key={movie._id} movie={movie} />
-              ))}
-            </div>
-          </>
+      {/* ── Content Rows ── */}
+      <div className={styles.content}>
+        <SectionRow title="🎬 නවතම එක්කිරීම්"     movies={latest}    href="/movies" />
+        <SectionRow title="🎨 Sinhala Cartoons"     movies={cartoons}  href="/movies?category=Cartoon" />
+        <SectionRow title="⚡ Sinhala Sub Anime"    movies={anime}     href="/movies?category=Anime" />
+        <SectionRow title="📺 Series"               movies={series}    href="/movies?category=Series" />
+        <SectionRow title="🎙️ සිංහල Dub Movies"    movies={dubbed}    href="/movies?lang=dubbed" />
+        <SectionRow title="📝 සිංහල Sub Movies"     movies={subMovies} href="/movies?lang=sub" />
+        {adult.length > 0 && (
+          <SectionRow title="🔞 18+ Movies"         movies={adult}     href="/movies?rating=18+" />
         )}
-
-        {/* Sinhala Sub Anime */}
-        {anime.length > 0 && (
-          <>
-            <div className={styles.sectionHeader}>
-              <h2 className={styles.rowTitle}>⚡ Sinhala Sub Anime</h2>
-              <Link href="/movies?category=Anime" className={styles.viewAll}>තව බලන්න ➔</Link>
-            </div>
-            <div className={styles.movieGrid}>
-              {anime.slice(0, 6).map(movie => (
-                <MovieCard key={movie._id} movie={movie} />
-              ))}
-            </div>
-          </>
-        )}
-
-        {/* 18+ Movies */}
-        {adultMovies.length > 0 && (
-          <>
-            <div className={styles.sectionHeader}>
-              <h2 className={styles.rowTitle}>🔞 18+ චිත්‍රපට</h2>
-              <Link href="/movies?rating=18+" className={styles.viewAll}>තව බලන්න ➔</Link>
-            </div>
-            <div className={styles.movieGrid}>
-              {adultMovies.slice(0, 6).map(movie => (
-                <MovieCard key={movie._id} movie={movie} />
-              ))}
-            </div>
-          </>
-        )}
-
       </div>
     </div>
   );
