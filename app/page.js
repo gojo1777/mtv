@@ -1,16 +1,15 @@
 import Link from 'next/link';
 import MovieCard from '../components/MovieCard';
 import styles from './page.module.css';
+import dbConnect from '../lib/mongodb';
+import Movie from '../models/Movie';
 export const dynamic = 'force-dynamic';
 
 async function getMovies() {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ||
-      (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000');
-    const res = await fetch(`${baseUrl}/api/movies`, { cache: 'no-store' });
-    if (!res.ok) return [];
-    const data = await res.json();
-    return Array.isArray(data) ? data : [];
+    await dbConnect();
+    const movies = await Movie.find({}).sort({ createdAt: -1 }).lean();
+    return JSON.parse(JSON.stringify(movies));
   } catch {
     return [];
   }
