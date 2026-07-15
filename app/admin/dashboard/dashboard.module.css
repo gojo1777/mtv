@@ -1,0 +1,313 @@
+/* --- Dashboard Layout --- */
+.dashboard {
+  min-height: 100vh;
+  padding: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  background-color: #0f0f0f;
+  color: #fff;
+}
+
+.loading {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: #e50914;
+}
+
+/* --- Header & Navigation --- */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid #e50914;
+}
+
+.header h1 {
+  font-size: 2rem;
+  color: #e50914;
+  margin: 0;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.userEmail {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.logoutBtn {
+  padding: 0.6rem 1.2rem;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.logoutBtn:hover {
+  background-color: #e50914;
+}
+
+/* --- 📊 Analytics & Stats Cards --- */
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.statCard {
+  background: linear-gradient(135deg, rgba(229, 9, 20, 0.2), rgba(229, 9, 20, 0.05));
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid rgba(229, 9, 20, 0.2);
+  text-align: center;
+}
+
+.statCard h3 {
+  font-size: 0.9rem;
+  color: #aaa;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.statNumber {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: #e50914;
+  margin: 0;
+}
+
+/* --- 📈 Traffic Graph Section --- */
+.statsSection {
+  background-color: rgba(26, 26, 26, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.statsSection h2 {
+  margin-bottom: 1.5rem;
+  color: #fff;
+  font-size: 1.4rem;
+}
+
+.statsTable {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.statsRow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.barContainer {
+  flex: 1;
+  background: #222;
+  height: 12px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.bar {
+  background: linear-gradient(90deg, #e50914, #ff4d4d);
+  height: 100%;
+  border-radius: 6px;
+  transition: width 0.6s ease-out;
+}
+
+/* --- Actions & Buttons --- */
+.actions {
+  margin-bottom: 2rem;
+}
+
+.addBtn {
+  padding: 1rem 2rem;
+  background-color: #e50914;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.addBtn:hover {
+  background-color: #b20710;
+  transform: translateY(-2px);
+}
+
+/* --- Movie Form Styles --- */
+.formCard {
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.imdbInput {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  background: #0a0a0a;
+  border: 1px solid #333;
+  color: white;
+  border-radius: 6px;
+}
+
+.movieForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.movieForm input, .movieForm textarea, .movieForm select {
+  padding: 0.8rem;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background: #0f0f0f;
+  color: #fff;
+}
+
+.movieForm input:focus {
+  border-color: #e50914;
+  outline: none;
+}
+
+/* --- 📺 Episode Section (Anime) --- */
+.episodeSection {
+  background: rgba(229, 9, 20, 0.05);
+  padding: 20px;
+  border-radius: 10px;
+  margin: 15px 0;
+  border: 1px dashed rgba(229, 9, 20, 0.5);
+}
+
+.episodeSection h3 {
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.epInputs {
+  display: grid;
+  grid-template-columns: 80px 1fr 2fr 80px;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.addEpBtn {
+  background: #e50914;
+  color: white;
+  border: none;
+  padding: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: 0.3s;
+}
+
+.addEpBtn:hover {
+  background: #b20710;
+}
+
+.epListPreview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.epItem {
+  background: #222;
+  padding: 6px 15px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #444;
+}
+
+.epItem button {
+  background: none;
+  border: none;
+  color: #ff4d4d;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/* --- Submit & List Table --- */
+.submitBtn {
+  padding: 1rem;
+  background-color: #e50914;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.movieRow {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: #1a1a1a;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 1rem;
+  border: 1px solid #333;
+}
+
+.movieRow img {
+  width: 60px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.movieInfo { flex: 1; }
+.movieInfo h4 { margin: 0 0 5px 0; font-size: 1.1rem; }
+.movieInfo p { margin: 0; font-size: 0.85rem; color: #888; }
+
+.movieActions { display: flex; gap: 0.5rem; }
+.editBtn { background: #333; color: #fff; border: 1px solid #444; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; }
+.deleteBtn { background: rgba(229, 9, 20, 0.1); color: #ff4d4d; border: 1px solid #e50914; padding: 0.5rem 1rem; border-radius: 5px; cursor: pointer; }
+
+/* --- Responsive --- */
+@media (max-width: 950px) {
+  .epInputs { grid-template-columns: 1fr 1fr; }
+  .addEpBtn { grid-column: span 2; padding: 10px; }
+}
+
+@media (max-width: 768px) {
+  .formRow { grid-template-columns: 1fr; }
+  .header { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .movieRow { flex-direction: column; text-align: center; }
+  .movieActions { width: 100%; justify-content: center; }
+}

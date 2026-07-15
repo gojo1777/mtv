@@ -1,0 +1,254 @@
+.detailsPage {
+  min-height: 100vh;
+  background-color: #080808;
+  color: #fff;
+  position: relative;
+  padding-bottom: 50px;
+}
+
+/* --- Backdrop Section --- */
+.backdrop {
+  position: relative;
+  width: 100%;
+  height: 50vh;
+  overflow: hidden;
+}
+
+.backdropImage {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  filter: blur(20px);
+  transform: scale(1.1);
+  opacity: 0.4;
+}
+
+.backdropOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to bottom, transparent, #080808);
+}
+
+/* --- Layout Structure --- */
+.mainContent {
+  display: flex;
+  gap: 40px;
+  margin-top: -200px;
+  position: relative;
+  z-index: 10;
+  padding: 0 20px;
+}
+
+.posterSide {
+  flex-shrink: 0;
+}
+
+.mainPoster {
+  width: 300px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.1);
+}
+
+.infoSide {
+  flex-grow: 1;
+}
+
+.mTitle {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+.mMeta {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.ratingBadge {
+  background: #ffc107;
+  color: #000;
+  padding: 4px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.metaItem {
+  color: #bbb;
+  font-size: 0.9rem;
+}
+
+.mDesc {
+  line-height: 1.6;
+  color: #ccc;
+  margin-bottom: 30px;
+  max-width: 800px;
+}
+
+/* --- 📺 Anime / Streaming Section --- */
+.playerWrapper {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 2px solid #333;
+  margin-bottom: 25px;
+}
+
+.mainPlayer {
+  width: 100%;
+  height: 100%;
+}
+
+.sectionTitle {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  border-left: 4px solid #e50914;
+  padding-left: 10px;
+}
+
+.epGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 40px;
+}
+
+.epCard {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  padding: 0;
+  color: #fff;
+}
+
+.epCard:hover, .epActive {
+  border-color: #e50914;
+  background: #252525;
+  transform: translateY(-3px);
+}
+
+.epThumb {
+  position: relative;
+  height: 90px;
+  width: 100%;
+}
+
+.epThumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.5;
+}
+
+.epTag {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  background: #e50914;
+  color: white;
+  padding: 2px 6px;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 4px;
+}
+
+.epInfo {
+  padding: 10px;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+/* --- 📥 Download Section --- */
+.downloadSection {
+  margin-top: 40px;
+}
+
+.dlGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.dlButton {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  min-width: 200px;
+  transition: 0.3s;
+}
+
+.dlButton:hover {
+  background: #333;
+  border-color: #e50914;
+}
+
+.dlQuality {
+  display: block;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.dlSize {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.dlIcon {
+  font-size: 1.2rem;
+  color: #e50914;
+}
+
+.watchBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #e50914;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.watchBtn:hover {
+  background: #b20710;
+}
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+  .mainContent {
+    flex-direction: column;
+    align-items: center;
+    margin-top: -100px;
+  }
+  .infoSide {
+    width: 100%;
+    text-align: center;
+  }
+  .mMeta, .dlGrid {
+    justify-content: center;
+  }
+  .mDesc {
+    margin: 0 auto 30px auto;
+  }
+}

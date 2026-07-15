@@ -1,0 +1,110 @@
+.commentsSection {
+  margin-top: 50px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.commentsTitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 20px;
+}
+
+.count {
+  color: #e50914;
+  font-size: 1rem;
+}
+
+/* Form */
+.commentForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 30px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 20px;
+}
+
+.nameInput, .textInput {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  color: white;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  transition: border-color 0.2s;
+  resize: none;
+}
+
+.nameInput:focus, .textInput:focus {
+  outline: none;
+  border-color: rgba(229,9,20,0.5);
+}
+
+.nameInput::placeholder, .textInput::placeholder { color: #555; }
+
+.submitBtn {
+  background: #e50914;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  align-self: flex-end;
+}
+
+.submitBtn:hover:not(:disabled) {
+  background: #c40812;
+  transform: translateY(-1px);
+}
+
+.submitBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* List */
+.commentsList { display: flex; flex-direction: column; gap: 12px; }
+
+.loadingText, .emptyText {
+  color: #555;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+}
+
+.commentCard {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: 12px;
+  padding: 15px;
+}
+
+.commentHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #e50914, #ff4d4d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+}
+
+.commentMeta { display: flex; flex-direction: column; gap: 2px; }
+.commentName { font-weight: 600; font-size: 0.9rem; color: white; }
+.commentTime { font-size: 0.75rem; color: #555; }
+.commentText { color: #ccc; font-size: 0.9rem; line-height: 1.5; }
